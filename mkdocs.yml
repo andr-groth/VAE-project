@@ -1,5 +1,5 @@
 site_name: 'VAE project'
-# repo_url: https://github.com/andr-groth/cdo-scripts
+repo_url: https://github.com/andr-groth/VAE-project
 nav:
   - Overview: index.md
   - Build model:
