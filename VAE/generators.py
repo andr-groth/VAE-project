@@ -614,15 +614,19 @@ def example_FitGenerator():
     dataset = np.reshape(np.arange(np.prod(shape)), shape)
     datasets = [dataset] * 3
 
-    # and the corresponding conditions
-    condition1 = np.linspace(-1, 1, 32)
-    condition2 = np.linspace(1, -1, 32)
+    # the corresponding time values
+    time = range(shape[1])
 
-    # in this exampple, the encoder and decoder conditions are different
+    # and the corresponding conditions
+    # the encoder and decoder conditions are different
+    encoder_cond = np.linspace(-1, 1, 32)
+    decoder_cond = np.linspace(1, -1, 32)
+
+    # then we create the generator
     fit_gen = FitGenerator(datasets,
                            condition={
-                               'encoder': condition1,
-                               'decoder': condition2
+                               'encoder': encoder_cond,
+                               'decoder': decoder_cond
                            },
                            input_length=1,
                            prediction_length=4,
@@ -630,11 +634,17 @@ def example_FitGenerator():
                            ensemble_size=len(datasets),
                            ensemble_type='index',
                            tp_period=12,
-                           time=range(shape[1]),
+                           time=time,
                            shuffle=False)
+
+    # we can see the summary of the generator
     fit_gen.summary()
+
+    # we can now use the generator to get the inputs for the model
     inputs, *_ = fit_gen[0]
 
+    # we can plot the inputs, to see what the model will get
+    # we show the encoder and decoder conditions
     fig, (lax, rax) = plt.subplots(1, 2, sharex=True, sharey=True, figsize=(16, 5))
     lax.pcolormesh(inputs['encoder_cond'][:, 0, :])
     lax.set_title("inputs['encoder_cond']")
