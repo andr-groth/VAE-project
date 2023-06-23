@@ -1345,8 +1345,7 @@ def IdentityModel(input_shape: tuple[int, int], set_size: int = 1) -> ks.Model:
 def example_VAE():
     """Example of a VAE model.
 
-    Example:
-        This function demonstrates how to build a VAE model using the method :func:`VAE.models.VAE`.
+    This function demonstrates how to build a VAE model using the method :func:`VAE.models.VAE`.
     """
 
     # We first define the parameters of the model:
@@ -1391,8 +1390,7 @@ def example_VAE():
 def example_VAEp():
     """Example of a VAEp model.
 
-    Example:
-        This function demonstrates how to build a VAEp model using the method :func:`VAE.models.VAEp`.
+    This function demonstrates how to build a VAEp model using the method :func:`VAE.models.VAEp`.
     """
 
     # We first define the parameters of the model:

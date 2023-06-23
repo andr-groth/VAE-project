@@ -19,6 +19,7 @@ nav:
   - Examples:
     - VAE: example_VAE.md
     - VAEp: example_VAEp.md
+    - more examples: examples.md
 markdown_extensions:
   - admonition
   - footnotes
