@@ -1438,8 +1438,3 @@ def example_VAEp():
     ks.utils.plot_model(model, show_shapes=True, dpi=75, rankdir='LR', to_file='example_VAEp.png')
 
     return model
-
-
-if __name__ == '__main__':
-    # model = example_VAE()
-    model = example_VAEp()

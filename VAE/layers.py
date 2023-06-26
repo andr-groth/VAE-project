@@ -798,9 +798,3 @@ def example_RandomSampling():
     model = ks.Model(inputs=[z_mean_in, z_log_var_in], outputs=out)
     z = model.predict([z_mean, z_log_var])
     print(z)
-
-
-if __name__ == '__main__':
-    example_Film()
-    # example_GumbelSoftmax()
-    # example_RandomSampling()

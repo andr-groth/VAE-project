@@ -590,7 +590,8 @@ class PredictGenerator(FitGenerator):
     The generator prepares the inputs for the model prediction with :func:`ks.Model.predict`.
 
     Parameters:
-        See :class:`FitGenerator` for parameters.
+        **kwargs:
+            See :class:`FitGenerator` for parameters.
 
     Returns:
         Dictionary containing the inputs for the model prediction.
@@ -652,7 +653,3 @@ def example_FitGenerator():
     rax.set_title("inputs['decoder_cond']")
 
     fig.colorbar(mp, ax=(lax, rax))
-
-
-if __name__ == '__main__':
-    example_FitGenerator()

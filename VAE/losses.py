@@ -546,8 +546,3 @@ def example_similarity_losses():
         print(f'{name:<25} mean={mean_loss:.2f}  std={std_loss:.2f}  shape={loss.shape}')
 
     return losses
-
-
-if __name__ == '__main__':
-    # example_total_correlation_losses()
-    example_similarity_losses()
