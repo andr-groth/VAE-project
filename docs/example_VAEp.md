@@ -1,7 +1,6 @@
 # Example of a VAEp model with prediction
 
-!!! note ""
-    You can find the full code for this example in a [Jupyter notebook](ipynb/example_VAEp.ipynb).
+:paperclip: You can find the full code for this example in a [Jupyter notebook](ipynb/example_VAEp.ipynb).
 
 This example demonstrates how to build a VAEp model with prediction using the method `VAE.models.VAEp`.
 

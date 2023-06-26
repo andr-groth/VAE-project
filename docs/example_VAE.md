@@ -1,7 +1,6 @@
 # Example of a VAE model
 
-!!! note ""
-    You can find the full code for this example in a [Jupyter notebook](ipynb/example_VAE.ipynb).
+:paperclip: You can find the full code for this example in a [Jupyter notebook](ipynb/example_VAE.ipynb).
 
 This example demonstrates how to build a VAE model using the method `VAE.models.VAE`.
 

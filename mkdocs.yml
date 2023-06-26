@@ -19,14 +19,22 @@ nav:
   - Examples:
     - VAE: example_VAE.md
     - VAEp: example_VAEp.md
-    - more examples: examples.md
+    - ... more: examples.md
+  - Implementations:
+    - ...
+  - Publications:
+    - ...
 markdown_extensions:
   - admonition
+  - attr_list
   - footnotes
   - pymdownx.details
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 plugins:
   - search
   - gen-files:

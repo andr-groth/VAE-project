@@ -4,7 +4,7 @@ Python module for the implementation of a variational autoencoder (VAE) for clim
 
 The present methodology extends on the VAE by adding a prediction decoder to the model. The prediction decoder is a neural network that is trained to predict a target variable from the latent space of the VAE.
 
-The framework is based on Groth & Chavez (2023). _submitted_.
+:blue_book: The framework is based on Groth & Chavez (2023). _submitted_.
 
 ## Examples
 
@@ -16,8 +16,10 @@ To get started, see the following examples:
 
 ## Implementations
 
-For applications of the VAE package to climate data, see its implementation in the following projects:
+For applications of the VAE package to climate data, see its implementation in the following repositories:
 
-- (VAE-ENSO)
-- (VAE-SSP)
-- (VAE-precip-predict)
+### :warning: Work in progress ...
+
+- VAE-ENSO
+- VAE-SSP
+- VAE-precip-predict

@@ -34,20 +34,14 @@ def _check_arg(filename, arg):
     return arg
 
 
-def _get_climexp_model_names(url, values=(0, ), div="container-fluid content", line=4):
-    """Get models names from Climate Explorer.
+def _get_climexp_model_names():
+    """Get models names from Climate Explorer."""
 
-    Parameters:
-        url : str
-            URL to the ensemble member with the index argument indicated by a `%d` specifier. For example
-            `'http://climexp.knmi.nl/selectmember.cgi?i=%d&field=cmip5_tos_Omon_one_rcp45'`.
-        values : iterable, optional
-            Values of the index. Defaults to (0, ).
-        div : str, optional
-            Class name of the div container. Defaults to "container-fluid content".
-        line : int, optional
-            Line number in the div container that contains the model name. Defaults to 4.
-    """
+    url = 'http://climexp.knmi.nl/selectmember.cgi?i=%d&field=cmip5_tos_Omon_one_rcp45'
+    values = range(0, 42)
+    div = "container-fluid content"
+    line = 4
+
     for value in values:
         _url = url % value
         with requests.get(_url) as r:
@@ -507,11 +501,11 @@ def read_climexp_raw_data_multi(filename: list[str],
     return df, metadata
 
 
-def read_iri_enso_plume(filename: str,
-                        join: str = 'outer',
-                        model_type: str = None,
-                        time_range: tuple[str, str] = None,
-                        dtype: str = 'float') -> pd.DataFrame:
+def _read_iri_enso_plume(filename: str,
+                         join: str = 'outer',
+                         model_type: str = None,
+                         time_range: tuple[str, str] = None,
+                         dtype: str = 'float') -> pd.DataFrame:
     """Read ENSO forecast plume from IRI.
 
     Read ENSO forecast plume in json format downloaded from https://iri.columbia.edu/~forecast/ensofcst/Data.
@@ -565,8 +559,23 @@ def read_iri_enso_plume(filename: str,
     return df
 
 
-def example_read_climexp_raw_data_multi(filename):
-    """Example of how to use the function `read_climexp_raw_data_multi`."""
+def example_read_climexp_raw_data_multi():
+    """Example of how to use the function `read_climexp_raw_data_multi`.
+
+    The function reads multiple files of raw data from the example_data folder.
+
+    ```
+    example_data/icmip5_tos_Omon_one_rcp45_pc01.txt
+    example_data/icmip5_tos_Omon_one_rcp45_pc02.txt
+    ```
+
+    """
+
+    filename = [
+        'example_data/icmip5_tos_Omon_one_rcp45_pc01.txt',
+        'example_data/icmip5_tos_Omon_one_rcp45_pc02.txt',
+    ]
+
     # read data
     df, metadata = read_climexp_raw_data_multi(filename, ensemble_members=[0, 1, 2, 3, 4, 5], join='outer')
 
@@ -589,18 +598,20 @@ def example_read_climexp_raw_data_multi(filename):
     ax.legend(loc='upper left')
     ax.grid(linestyle=':')
 
-    return df
 
-
-def example1_read_netcdf(filename):
+def example1_read_netcdf():
     """Example of how to use the function `read_netcdf`.
 
-    This function reads EOFs in a netCDF file from the Climate explorer.
+    This function reads EOFs in a netCDF file from the Climate explorer from the `example_data` folder:
 
-    Parameters:
-        filename : str
-            Name of the file.
+    ```
+    example_data/eofs_icmip5_tos_Omon_one_rcp45.nc
+    ```
+
     """
+
+    filename = 'example_data/eofs_icmip5_tos_Omon_one_rcp45.nc'
+
     # read data
     variables, dimensions, attributes = read_netcdf(filename)
 
@@ -621,15 +632,23 @@ def example1_read_netcdf(filename):
     vplt.map_plot(dimensions['lat'], dimensions['lon'], squeeze_variables, ncols=5, figwidth=20, cmap='seismic')
 
 
-def example2_read_netcdf(filename):
+def example2_read_netcdf():
     """Example of how to use the function `read_netcdf`.
 
-    This function reads EOFs in a netCDF file from the output of CDO.
+    This function reads EOFs in a netCDF file from the output of the climate data operators (CDO). The file is from the
+    `example_data` folder:
 
-    Parameters:
-        filename : str
-            Name of the file.
+    ```
+    example_data/eofs_anom_gpcc_v2020_1dgr.nc
+    ```
+
+    :material-github: For the calculation of the EOFs and PCs with CDO see the [CDO
+        scripts](https://github.com/andr-groth/cdo-scripts).
+
     """
+
+    filename = 'example_data/eofs_anom_gpcc_v2020_1dgr.nc'
+
     # read data
     variables, dimensions, attributes = read_netcdf(filename)
 
@@ -650,12 +669,23 @@ def example2_read_netcdf(filename):
     vplt.map_plot(dimensions['lat'], dimensions['lon'], variable, ncols=10, figwidth=20, cmap='seismic')
 
 
-def example3_read_netcdf(filename):
+def example3_read_netcdf():
     """Example of how to use the function `read_netcdf`.
 
-    This function reads PCs in a netCDF file from the output of CDO.
+    This function reads PCs in a netCDF file from the output of the climate data operators (CDO). The file is from the
+    `example_data` folder:
+
+    ```
+    example_data/pcs_anom_gpcc_v2020_1dgr.nc
+    ```
+
+    :material-github: For the calculation of the EOFs and PCs with CDO see the [CDO
+        scripts](https://github.com/andr-groth/cdo-scripts).
 
     """
+
+    filename = 'example_data/pcs_anom_gpcc_v2020_1dgr.nc'
+
     # read data
     variables, dimensions, attributes = read_netcdf(filename, num2date=True)
 
@@ -683,12 +713,23 @@ def example3_read_netcdf(filename):
         ax.set_title(n)
 
 
-def example_read_netcdf_multi(filename):
+def example_read_netcdf_multi(filename: str):
     """Example of how to use the function `read_netcdf_multi`.
 
-    This function reads PCs in multiple netCDF files from the output of CDO.
+    This function reads PCs in multiple netCDF files from the output of the climate data operators (CDO). The files are
+    from the `example_data` folder:
+
+    ```
+    example_data/pcs_anom_pr_*.nc
+    ```
+
+    :material-github: For the calculation of the EOFs and PCs with CDO see the [CDO
+        scripts](https://github.com/andr-groth/cdo-scripts).
 
     """
+
+    filename = 'example_data/pcs_anom_pr_*.nc'
+
     # read data
     variables, dimensions, attributes = read_netcdf_multi(filename, num2date=True)
 
@@ -720,9 +761,23 @@ def example_read_netcdf_multi(filename):
     axs.flat[0].legend()
 
 
-def example_read_iri_enso_plume(filename):
-    """Example of how to use the function `read_iri_enso_plume`."""
-    df = read_iri_enso_plume(filename)
+def _example_read_iri_enso_plume(filename):
+    """Example of how to use the function `read_iri_enso_plume`.
+
+    This function reads the ENSO plume data from the IRI. The file is from the `example_data` folder:
+
+    ```
+    example_data/enso_plumes.json
+    ```
+
+    Data provided by The International Research Institute for Climate and Society, Columbia University Climate School,
+    at [iri.columbia.edu/ENSO](https://iri.columbia.edu/ENSO)
+
+    """
+
+    filename = 'example_data/_enso_plumes.json'
+
+    df = _read_iri_enso_plume(filename)
     names = df.columns.levels[0]
     fig, axs = plt.subplots(len(names),
                             1,
@@ -738,25 +793,3 @@ def example_read_iri_enso_plume(filename):
         ax.set_ylabel(f'{name} ({data_valid:.0f})', rotation=0, ha='right', va='center')
 
     fig.colorbar(mp, ax=axs, shrink=0.3, extend='both')
-    return df
-
-
-if __name__ == '__main__':
-
-    # example_read_climexp_raw_data_multi([
-    #     'example_data/icmip5_tos_Omon_one_rcp45_pc01.txt',
-    #     'example_data/icmip5_tos_Omon_one_rcp45_pc02.txt',
-    # ])
-
-    # example1_read_netcdf('example_data/eofs_icmip5_tos_Omon_one_rcp45.nc')
-    # example2_read_netcdf('example_data/eofs_anom_gpcc_v2020_1dgr.nc')
-    # example2_read_netcdf('example_data/eofs_pr_anom_cmip6_historical.nc')
-    # example3_read_netcdf('example_data/pcs_anom_gpcc_v2020_1dgr.nc')
-    # example3_read_netcdf('example_data/pcs_anom_pr_Amon_ACCESS-CM2_historical_r1i1p1f1_gn.nc')
-
-    example_read_netcdf_multi('example_data/pcs_anom_pr_*.nc')
-
-    # example_read_iri_enso_plume('example_data/enso_plumes.json')
-
-    # url = 'http://climexp.knmi.nl/selectmember.cgi?i=%d&field=cmip5_tos_Omon_one_rcp45'
-    # _get_climexp_model_names(url=url, values=range(0, 42))
