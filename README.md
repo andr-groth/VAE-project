@@ -55,7 +55,9 @@ See the [documentation](https://andr-groth.github.io/VAE-project/) for more deta
 
 For applications of the VAE to climate data, see its implementation in the following repositories:
 
-Work in progress ...
+- [VAE-precip-predict](https://github.com/andr-groth/VAE-precip-predict)
+- [VAE-SSP](https://github.com/andr-groth/VAE-SSP)
+
+:construction: Work in progress ...
+
 - VAE-ENSO
-- VAE-SSP
-- VAE-precip-predict
