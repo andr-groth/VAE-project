@@ -4,10 +4,6 @@ Collection of plot functions.
 
 """
 
-# TODO: add latent_sampling as argument to decoder functions. Manipulate z_mean, draw z and feed to decoder.
-
-from types import SimpleNamespace
-
 import cartopy.crs as ccrs
 import numpy as np
 from cartopy import feature as cfeature
@@ -20,8 +16,6 @@ from scipy.signal import find_peaks
 from scipy.stats import norm
 from tensorflow.keras import Model
 from tensorflow.keras.utils import Progbar
-
-from VAE._iowrapper import DataHandler
 
 
 def decoder_plot(decoder: Model,
@@ -1398,8 +1392,15 @@ def map_zonal(datetime,
     """
     map_data, labels = _map_to_dict(map_data, labels)
 
-    coord = SimpleNamespace(lon=longitude)
-    lon_idx = DataHandler.get_lon_index(coord, *lon_lim)
+    minimum, maximum = lon_lim
+    minimum = np.deg2rad(minimum) % (2 * np.pi)
+    maximum = np.deg2rad(maximum) % (2 * np.pi)
+    lon = np.deg2rad(longitude) % (2 * np.pi)
+
+    if minimum < maximum:
+        lon_idx = np.flatnonzero(np.logical_and(minimum <= lon, lon <= maximum))
+    elif minimum >= maximum:
+        lon_idx = np.flatnonzero(np.logical_or(minimum <= lon, lon <= maximum))
 
     nrows = len(map_data)
     fig, axs = plt.subplots(nrows, 1, squeeze=True, sharex=True, sharey=True, figsize=figsize)
@@ -1477,8 +1478,8 @@ def map_meridional(datetime,
     """
     map_data, labels = _map_to_dict(map_data, labels)
 
-    coord = SimpleNamespace(lat=latitude)
-    lat_idx = DataHandler.get_lat_index(coord, *lat_lim)
+    minimum, maximum = lat_lim
+    lat_idx = np.flatnonzero(np.logical_and(minimum <= latitude, latitude <= maximum))
 
     longitude_wrap = longitude.copy()
     longitude_wrap[longitude_wrap > 180] -= 360
