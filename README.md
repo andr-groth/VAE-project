@@ -23,10 +23,10 @@ or with `conda`:
 conda install --file requirements.txt
 ```
 
-Download the repository, `cd` into the project directory and install the package with:
+Clone the repository, `cd` into the project directory and install the package with:
 
 ```shell
-pip install VAE
+pip install -e .
 ```
 
 ## Requirements

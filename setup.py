@@ -5,7 +5,5 @@ setup(name='VAE',
       description='Variational auto-encoder + prediction',
       author='Andreas Groth',
       url='https://github.com/andr-groth/VAE-project',
-      install_requires=[],
-      packages=find_packages(),
-      include_package_data=True,
-      python_requires='>=3.9')
+      license='MIT',
+      packages=find_packages())
