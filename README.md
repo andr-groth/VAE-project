@@ -39,11 +39,11 @@ tensorflow>=2.5
 numpy
 scipy
 scikit-learn
-pandas
-pydot
-pyyaml
 netCDF4
-openpyxl
+pandas
+matplotlib
+cartopy
+jupyterlab
 ```
 
 ## Documentation
