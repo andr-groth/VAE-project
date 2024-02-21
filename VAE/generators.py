@@ -24,7 +24,7 @@ class FitGenerator(ks.utils.Sequence):
 
     Parameters:
         datasets:
-            Dataset used for training. The dataset can be either a single mumpy array of shape `(set_size, data_length,
+            Dataset used for training. The dataset can be either a single numpy array of shape `(set_size, data_length,
             channels)` or a list of Numpy arrays. In case of a list of Numpy arrays, `set_size` and `channels` must be
             the same, while `data_length` can vary. Missing (non-finite) values will be excluded from the samples.
         input_length:
@@ -56,7 +56,7 @@ class FitGenerator(ks.utils.Sequence):
             Whether to sample the random ensemble condition with replacement if `repeat_samples > 1`. Defaults to
             `False`.
         ensemble_sync:
-            Sychronization random ensemble conditions between encoder and decoder. If `True` , the random ensemble
+            Synchronize random ensemble conditions between encoder and decoder. If `True` , the random ensemble
             conditions of the encoder and decoder are the same. Defaults to `False`, i.e. the random ensemble conditions
             of the encoder an decoder are different random samples. Note that the ensemble conditions of the decoder and
             prediction are always the same.
@@ -100,6 +100,7 @@ class FitGenerator(ks.utils.Sequence):
         dtype:
             Dtype of the data that will be returned.
     """
+
     def __init__(self,
                  datasets: Union[np.ndarray, list[np.ndarray]],
                  input_length: int,
@@ -552,14 +553,14 @@ class FitGenerator(ks.utils.Sequence):
 
         channels = tuple(range(self.channels))[self.input_channels]
         if len(channels) == self.channels:
-            print(f'Input channels     : all')
+            print('Input channels     : all')
         else:
             print(f'Input channels     : {channels}')
 
         if self.prediction_length:
             channels = tuple(range(self.channels))[self.prediction_channels]
             if len(channels) == self.channels:
-                print(f'Predicted channels : all')
+                print('Predicted channels : all')
             else:
                 print(f'Predicted channels : {channels}')
 
@@ -597,6 +598,7 @@ class PredictGenerator(FitGenerator):
         Dictionary containing the inputs for the model prediction.
 
     """
+
     def __getitem__(self, idx: int) -> dict:
         """Return inputs to the model for given batch."""
         inputs, _ = super().__getitem__(idx)
