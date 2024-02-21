@@ -6,7 +6,7 @@ Python module for the implementation of a variational autoencoder (VAE) for clim
 
 The present methodology extends on the VAE by adding a second decoder to the model. The second decoder is trained to make predictions about the future evolution of the data from the latent space. The VAE is trained to learn the distribution of the data and the prediction decoder is trained to make predictions about the future distribution of the data.
 
-The framework is based on Groth & Chavez (2023). _submitted_.
+The framework is published in [Groth and Chavez (2023)](https://doi.org/10.21203/rs.3.rs-2830779/v1). An implementation can be found at https://github.com/andr-groth/VAE-ENSO-emulator.
 
 
 ## Installation
@@ -55,9 +55,6 @@ See the [documentation](https://andr-groth.github.io/VAE-project/) for more deta
 
 For applications of the VAE to climate data, see its implementation in the following repositories:
 
+- [VAE-ENSO-emulator](https://github.com/andr-groth/VAE-ENSO-emulator)
 - [VAE-precip-predict](https://github.com/andr-groth/VAE-precip-predict)
 - [VAE-SSP](https://github.com/andr-groth/VAE-SSP)
-
-:construction: Work in progress ...
-
-- VAE-ENSO
