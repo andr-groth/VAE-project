@@ -562,7 +562,7 @@ def _read_iri_enso_plume(filename: str,
 def example_read_climexp_raw_data_multi():
     """Example of how to use the function `read_climexp_raw_data_multi`.
 
-    The function reads multiple files of raw data from the example_data folder.
+    The function reads multiple files of raw data from the `example_data/` folder.
 
     ```
     example_data/icmip5_tos_Omon_one_rcp45_pc01.txt
@@ -602,7 +602,7 @@ def example_read_climexp_raw_data_multi():
 def example1_read_netcdf():
     """Example of how to use the function `read_netcdf`.
 
-    This function reads EOFs in a netCDF file from the Climate explorer from the `example_data` folder:
+    This function reads EOFs in a netCDF file from the Climate explorer from the `example_data/` folder:
 
     ```
     example_data/eofs_icmip5_tos_Omon_one_rcp45.nc
@@ -636,7 +636,7 @@ def example2_read_netcdf():
     """Example of how to use the function `read_netcdf`.
 
     This function reads EOFs in a netCDF file from the output of the climate data operators (CDO). The file is from the
-    `example_data` folder:
+    `example_data/` folder:
 
     ```
     example_data/eofs_anom_gpcc_v2020_1dgr.nc
@@ -673,7 +673,7 @@ def example3_read_netcdf():
     """Example of how to use the function `read_netcdf`.
 
     This function reads PCs in a netCDF file from the output of the climate data operators (CDO). The file is from the
-    `example_data` folder:
+    `example_data/` folder:
 
     ```
     example_data/pcs_anom_gpcc_v2020_1dgr.nc
@@ -717,7 +717,7 @@ def example_read_netcdf_multi(filename: str):
     """Example of how to use the function `read_netcdf_multi`.
 
     This function reads PCs in multiple netCDF files from the output of the climate data operators (CDO). The files are
-    from the `example_data` folder:
+    from the `example_data/` folder:
 
     ```
     example_data/pcs_anom_pr_*.nc
@@ -764,7 +764,7 @@ def example_read_netcdf_multi(filename: str):
 def _example_read_iri_enso_plume(filename):
     """Example of how to use the function `read_iri_enso_plume`.
 
-    This function reads the ENSO plume data from the IRI. The file is from the `example_data` folder:
+    This function reads the ENSO plume data from the IRI. The file is from the `example_data/` folder:
 
     ```
     example_data/enso_plumes.json

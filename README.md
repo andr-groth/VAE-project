@@ -6,7 +6,7 @@ Python module for the implementation of a variational autoencoder (VAE) for clim
 
 The present methodology extends on the VAE by adding a second decoder to the model. The second decoder is trained to make predictions about the future evolution of the data from the latent space. The VAE is trained to learn the distribution of the data and the prediction decoder is trained to make predictions about the future distribution of the data.
 
-The model framework is published in [Groth and Chavez (2023)](https://doi.org/10.21203/rs.3.rs-2830779/v1).
+The modeling framework is published in [Groth and Chavez (2023)](https://doi.org/10.21203/rs.3.rs-2830779/v1).
 
 
 ## Installation
