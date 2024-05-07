@@ -9,7 +9,7 @@ The present methodology extends on the VAE by adding a second decoder to the mod
 ## Implementation
 The modeling framework is published in [Groth and Chavez (2024)](https://doi.org/10.1007/s00382-024-07162-w). For an implementation see the corresponding Jupyter notebooks at:
 
-> https://github.com/andr-groth/VAE-ENSO-emulator
+> <https://github.com/andr-groth/VAE-ENSO-emulator>
 
 ## Installation
 
