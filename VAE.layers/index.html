@@ -1,0 +1,2777 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../VAE.models/">
+      
+      
+        <link rel="next" href="../VAE.losses/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.21">
+    
+    
+      
+        <title>Layers - VAE project</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.66ac8b77.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#VAE.layers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="VAE project" class="md-header__button md-logo" aria-label="VAE project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            VAE project
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Layers
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/andr-groth/VAE-project" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="VAE project" class="md-nav__button md-logo" aria-label="VAE project" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    VAE project
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/andr-groth/VAE-project" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Build model
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Build model
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Layers
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Layers
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#VAE.layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      layers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="layers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attention
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Attention.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.AttentionMasked" class="md-nav__link">
+    <span class="md-ellipsis">
+      AttentionMasked
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AttentionMasked">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.AttentionMasked.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Film" class="md-nav__link">
+    <span class="md-ellipsis">
+      Film
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Film">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Film.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.GumbelSoftmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      GumbelSoftmax
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GumbelSoftmax">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.GumbelSoftmax.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.RandomSampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      RandomSampling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RandomSampling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.RandomSampling.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Split
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Split.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.example_Film" class="md-nav__link">
+    <span class="md-ellipsis">
+      example_Film
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.example_GumbelSoftmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      example_GumbelSoftmax
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.example_RandomSampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      example_RandomSampling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Train model
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Train model
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.losses/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Losses
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.callbacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Callbacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.logs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.generators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.utils.beta_schedulers/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Beta Scheduler
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Utils
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Utils
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.utils.fileio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FileIO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.utils.math/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mathematical functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.utils.collection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Helper functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../VAE.utils.plot/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Plot functions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../example_VAE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VAE
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../example_VAEp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    VAEp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ... more
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#VAE.layers" class="md-nav__link">
+    <span class="md-ellipsis">
+      layers
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="layers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Attention" class="md-nav__link">
+    <span class="md-ellipsis">
+      Attention
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attention">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Attention.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.AttentionMasked" class="md-nav__link">
+    <span class="md-ellipsis">
+      AttentionMasked
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AttentionMasked">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.AttentionMasked.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Film" class="md-nav__link">
+    <span class="md-ellipsis">
+      Film
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Film">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Film.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.GumbelSoftmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      GumbelSoftmax
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="GumbelSoftmax">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.GumbelSoftmax.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.RandomSampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      RandomSampling
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RandomSampling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.RandomSampling.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Split" class="md-nav__link">
+    <span class="md-ellipsis">
+      Split
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Split">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.Split.call" class="md-nav__link">
+    <span class="md-ellipsis">
+      call
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.example_Film" class="md-nav__link">
+    <span class="md-ellipsis">
+      example_Film
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.example_GumbelSoftmax" class="md-nav__link">
+    <span class="md-ellipsis">
+      example_GumbelSoftmax
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#VAE.layers.example_RandomSampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      example_RandomSampling
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Layers</h1>
+
+<div class="doc doc-object doc-module">
+
+
+
+<h2 id="VAE.layers" class="doc doc-heading">
+          <span class="doc doc-object-name doc-module-name">VAE.layers</span>
+
+
+</h2>
+
+  <div class="doc doc-contents first">
+  
+      <p>Collection of Keras layers.</p>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="VAE.layers.Attention" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">VAE.layers.Attention</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">Attention</span><span class="p">(</span><span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">,</span> <span class="n">permute</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="tensorflow.keras.layers.Layer">Layer</span></code></p>
+
+  
+      <p>Dot-product attention layer.</p>
+<p>This layers builds on the attention layer :class:<code>keras.layers.Attention</code>. The matrix multiplication in the
+attention is applied to the two inner dimensions and broadcasted otherwise. Use <code>permute</code> to reorder the input
+before attention. The output has again the same order of dimenions as the input.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>activation</code></b>
+            (<code>str</code>, default:
+                <code>&#39;softmax&#39;</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Name of activation function applied to the score. Defaults to 'softmax'.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>permute</code></b>
+            (<code>list[int]</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Permutation applied to the dimensions of the input tensors before attention. The output has the same order
+of dimenions as the input. Defaults to <code>None</code>, meaning that no permutation is applied.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>**kwargs</code></b>
+        –
+        <div class="doc-md-description">
+          <p>Additional keyword arguments passed to the <code>Layer</code> superclass.</p>
+        </div>
+      </li>
+  </ul>
+
+                <details class="quote">
+                  <summary>Source code in <code>VAE/layers.py</code></summary>
+                  <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">activation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;softmax&#39;</span><span class="p">,</span> <span class="n">permute</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">activation</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">permute</span> <span class="o">=</span> <span class="n">permute</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ipermute</span> <span class="o">=</span> <span class="kc">None</span>
+</code></pre></div></td></tr></table></div>
+                </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="VAE.layers.Attention.call" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.Attention.call</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Call the layer.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>inputs</code></b>
+            (<code>tuple[<span title="tensorflow.Tensor">Tensor</span>, <span title="tensorflow.Tensor">Tensor</span>, <span title="tensorflow.Tensor">Tensor</span>]</code>)
+        –
+        <div class="doc-md-description">
+          <p>Tuple of three tensors representing the query, key, and value, respectively. The shapes of the three
+tensors is <code>(batch_size, set_size, time_length, channels)</code>.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code><span title="tensorflow.Tensor">Tensor</span></code>
+        –
+        <div class="doc-md-description">
+          <p>Tensor of shape <code>(batch_size, set_size, time_length, channels)</code>.</p>
+      </div>
+      </li>
+  </ul>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span>
+<span class="normal">62</span>
+<span class="normal">63</span>
+<span class="normal">64</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Call the layer.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        inputs:</span>
+<span class="sd">            Tuple of three tensors representing the query, key, and value, respectively. The shapes of the three</span>
+<span class="sd">            tensors is `(batch_size, set_size, time_length, channels)`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor of shape `(batch_size, set_size, time_length, channels)`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">inputs</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">permute</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permute</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permute</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permute</span><span class="p">)</span>
+
+    <span class="n">qk</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">transpose_b</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">qk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">qk</span><span class="p">)</span>
+    <span class="n">qkv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">qk</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ipermute</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">qkv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">qkv</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ipermute</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">qkv</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="VAE.layers.AttentionMasked" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">VAE.layers.AttentionMasked</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">AttentionMasked</span><span class="p">(</span><span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">,</span> <span class="n">masked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">permute</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="tensorflow.keras.layers.Layer">Layer</span></code></p>
+
+  
+      <p>Dot-product attention layer.</p>
+<p>This layers builds on the attention layer :class:<code>keras.layers.Attention</code>. Each input tensor of shape <code>(batch_size,
+set_size, time_length, channels)</code> is first reshaped into a tensor of shape <code>(batch_size, set_size * time_length,
+channels)</code>. The dot-product attention is applied on the last dimension. If <code>masked=True</code>, score values with a query
+time index larger than the key time index are masked out.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>activation</code></b>
+            (<code>str</code>, default:
+                <code>&#39;softmax&#39;</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Activation function applied to the scores. Defaults to 'softmax'.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>masked</code></b>
+            (<code>bool</code>, default:
+                <code>True</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Whether a causal masked is applied to the scores. Defaults to <code>True</code>.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>permute</code></b>
+            (<code>tuple[int, int, int]</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>More general permutation of the dimensions of the input tensors before attention.  Note that the time index
+of the causal mask always refers to the second dimension of the permuted dimensions. Defaults to <code>None</code>,
+meaning that no permutation is applied.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>**kwargs</code></b>
+        –
+        <div class="doc-md-description">
+          <p>Additional keyword arguments passed to the <code>Layer</code> superclass.</p>
+        </div>
+      </li>
+  </ul>
+
+                <details class="quote">
+                  <summary>Source code in <code>VAE/layers.py</code></summary>
+                  <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">activation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;softmax&#39;</span><span class="p">,</span>
+             <span class="n">masked</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="n">permute</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">activation</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">masked</span> <span class="o">=</span> <span class="n">masked</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">permute</span> <span class="o">=</span> <span class="n">permute</span>
+</code></pre></div></td></tr></table></div>
+                </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="VAE.layers.AttentionMasked.call" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.AttentionMasked.call</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Apply the the dot-product attention to the inputs.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>inputs</code></b>
+            (<code>tuple[<span title="tensorflow.Tensor">Tensor</span>, <span title="tensorflow.Tensor">Tensor</span>, <span title="tensorflow.Tensor">Tensor</span>]</code>)
+        –
+        <div class="doc-md-description">
+          <p>Tuple of three tensors representing the query, key, and value, respectively. The shapes of the three
+tensors is <code>(batch_size, set_size, time_length, channels)</code>.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code><span title="tensorflow.Tensor">Tensor</span></code>
+        –
+        <div class="doc-md-description">
+          <p>Tensor of shape <code>(batch_size, set_size, time_length, channels)</code>.</p>
+      </div>
+      </li>
+  </ul>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply the the dot-product attention to the inputs.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        inputs:</span>
+<span class="sd">            Tuple of three tensors representing the query, key, and value, respectively. The shapes of the three</span>
+<span class="sd">            tensors is `(batch_size, set_size, time_length, channels)`.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor of shape `(batch_size, set_size, time_length, channels)`.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">inputs</span>
+
+    <span class="c1"># permute dimensions</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">permute</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permute</span><span class="p">)</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permute</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">permute</span><span class="p">)</span>
+
+    <span class="n">q_shape</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">k_shape</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">v_shape</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">q_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">q_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">q_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="n">k</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">k_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">k_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">v_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">v_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">v_shape</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span>
+
+    <span class="c1"># get dot product of queries and keys</span>
+    <span class="n">qk</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">transpose_b</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># scale</span>
+    <span class="n">qk</span> <span class="o">/=</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">q_shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">qk</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+    <span class="c1"># apply mask to dot product: set masked positions to large negative values results in near zero activation</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">qk</span> <span class="o">-=</span> <span class="mf">1e9</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mask</span>
+    <span class="c1"># activation</span>
+    <span class="n">qk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">qk</span><span class="p">)</span>
+
+    <span class="c1"># get output of attention</span>
+    <span class="n">qkv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">qk</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="c1"># reshape output</span>
+    <span class="n">qkv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">qkv</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">v_shape</span><span class="p">)</span>
+
+    <span class="c1"># restore order of dimensions in output</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ipermute</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">qkv</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">qkv</span><span class="p">,</span> <span class="n">perm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ipermute</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">qkv</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="VAE.layers.Film" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">VAE.layers.Film</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">Film</span><span class="p">(</span><span class="n">activation</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">use_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_offset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">kernel_initializer</span><span class="o">=</span><span class="s1">&#39;glorot_uniform&#39;</span><span class="p">,</span> <span class="n">bias_initializer</span><span class="o">=</span><span class="s1">&#39;zeros&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="tensorflow.keras.layers.Layer">Layer</span></code></p>
+
+  
+      <p>Feature-wise linear modulation.</p>
+<p>Feature-wise linear modulation of the last dimension of the input tensor.</p>
+<p>A linear layer is applied to the last dimension of the condition tensor and the output gives the scale that is
+multiplied with the input tensor. The scale can be activated by a non-linearity prior to the multiplication.</p>
+<p>Another linear layer is applied to the last dimension of the condition tensor and the output gives the offset that
+is added to the input tensor.</p>
+<p>The rank of the condition tensor can be smaller than the rank of the input tensor. In this case, the scale is
+applied according to shape parameter.</p>
+<p>Note: In this version of the FiLM layer, the shape parameter affects both, the scale and the offset.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>activation</code></b>
+            (<code>str</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Activation function in the linear layer of the scale.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>use_scale</code></b>
+            (<code>bool</code>, default:
+                <code>True</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Whether to use the scale.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>use_offset</code></b>
+            (<code>bool</code>, default:
+                <code>True</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Whether to use the offset.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>use_bias</code></b>
+            (<code>bool</code>, default:
+                <code>True</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Whether to use a bias in the linear layers of the scale and offset.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>shape</code></b>
+            (<code>list[int]</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Shape of the modulation. If None, the modulation is applied to the last dimension of the input. This is the
+default case from [1]. If shape is a tuple of length <code>n</code> (where <code>n = rank(input) - rank(condition) + 1</code>),
+the modulation is applied to the last <code>n</code> dimensions of the input according to the specified shape. Setting
+values to <code>None</code> in the shape tuple results in the modulation being applied to this dimension. Setting
+values to 1 in the shape results in the modulation being broadcasted to this dimension.Default is None.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>kernel_initializer</code></b>
+            (<code>str</code>, default:
+                <code>&#39;glorot_uniform&#39;</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Initializer for the kernel of the linear layers.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>bias_initializer</code></b>
+            (<code>str</code>, default:
+                <code>&#39;zeros&#39;</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Initializer for the bias of the linear layers.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>**kwargs</code></b>
+        –
+        <div class="doc-md-description">
+          <p>Additional keyword arguments passed to the <code>Layer</code> superclass.</p>
+        </div>
+      </li>
+  </ul>
+      <p>References:
+    [1] Perez et al. (2017): https://arxiv.org/abs/1709.07871.</p>
+
+                <details class="quote">
+                  <summary>Source code in <code>VAE/layers.py</code></summary>
+                  <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">activation</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">use_scale</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="n">use_offset</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="n">use_bias</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+             <span class="n">shape</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="n">kernel_initializer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;glorot_uniform&#39;</span><span class="p">,</span>
+             <span class="n">bias_initializer</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;zeros&#39;</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">activation</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">activations</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">activation</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_scale</span> <span class="o">=</span> <span class="n">use_scale</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_offset</span> <span class="o">=</span> <span class="n">use_offset</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span> <span class="o">=</span> <span class="n">use_bias</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">=</span> <span class="n">shape</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kernel_initializer</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kernel_initializer</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">bias_initializer</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">bias_initializer</span><span class="p">)</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+                </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="VAE.layers.Film.call" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.Film.call</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Apply FiLM to input tensor.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>inputs</code></b>
+            (<code>tuple[<span title="tensorflow.Tensor">Tensor</span>, <span title="tensorflow.Tensor">Tensor</span>]</code>)
+        –
+        <div class="doc-md-description">
+          <p>Tuple of two tensors of arbitrary shape. The first tensor is the input. The second tensor is the
+condition. The <code>k - 1</code> leading dimensions of the condition tensor must be broadcastable to the first
+<code>k- 1</code> leading dimensions of the input tensor, where <code>k</code> is the rank of the condition tensor.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code><span title="tensorflow.Tensor">Tensor</span></code>
+        –
+        <div class="doc-md-description">
+          <p>Tensor of the same shape as input tensor.</p>
+      </div>
+      </li>
+  </ul>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply FiLM to input tensor.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        inputs:</span>
+<span class="sd">            Tuple of two tensors of arbitrary shape. The first tensor is the input. The second tensor is the</span>
+<span class="sd">            condition. The `k - 1` leading dimensions of the condition tensor must be broadcastable to the first</span>
+<span class="sd">            `k- 1` leading dimensions of the input tensor, where `k` is the rank of the condition tensor.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor of the same shape as input tensor.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">cond</span> <span class="o">=</span> <span class="n">inputs</span>
+
+    <span class="c1"># scale input</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_scale</span><span class="p">:</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma_kernel</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">:</span>
+            <span class="n">gamma</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gamma_bias</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">:</span>
+            <span class="n">gamma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">*=</span> <span class="n">gamma</span>
+
+    <span class="c1"># add offset</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_offset</span><span class="p">:</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta_kernel</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_bias</span><span class="p">:</span>
+            <span class="n">beta</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta_bias</span>
+
+        <span class="n">x</span> <span class="o">+=</span> <span class="n">beta</span>
+
+    <span class="k">return</span> <span class="n">x</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="VAE.layers.GumbelSoftmax" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">VAE.layers.GumbelSoftmax</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">GumbelSoftmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">noise_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="tensorflow.keras.layers.Layer">Layer</span></code></p>
+
+  
+      <p>Random sampling from Gumbel softmax distribution.</p>
+<p>This layer is used to sample from a Gumbel softmax distribution.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>axis</code></b>
+            (<code>int</code>, default:
+                <code>-1</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The axis along which to apply the Gumbel softmax. Default is last axis.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>temperature</code></b>
+            (<code>float</code>, default:
+                <code>1.0</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The temperature of the Gumbel softmax. Default is 1.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>hard</code></b>
+            (<code>bool</code>, default:
+                <code>False</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>Whether to sample from the hard or soft Gumbel distribution.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>noise_shape</code></b>
+            (<code>list[int]</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The shape of the random noise. Must be of the same length as the number of dimensions in the input. <code>None</code>
+values in the tuple can be used to infer the shape from the input shape. If <code>None</code>, the noise shape will be
+equal to the shape of the input. Default is <code>None</code>.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>**kwargs</code></b>
+        –
+        <div class="doc-md-description">
+          <p>Additional keyword arguments passed to the <code>Layer</code> superclass.</p>
+        </div>
+      </li>
+  </ul>
+
+                <details class="quote">
+                  <summary>Source code in <code>VAE/layers.py</code></summary>
+                  <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">580</span>
+<span class="normal">581</span>
+<span class="normal">582</span>
+<span class="normal">583</span>
+<span class="normal">584</span>
+<span class="normal">585</span>
+<span class="normal">586</span>
+<span class="normal">587</span>
+<span class="normal">588</span>
+<span class="normal">589</span>
+<span class="normal">590</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+             <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+             <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span>
+             <span class="n">hard</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+             <span class="n">noise_shape</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">hard</span> <span class="o">=</span> <span class="n">hard</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">noise_shape</span> <span class="o">=</span> <span class="n">noise_shape</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+                </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="VAE.layers.GumbelSoftmax.call" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.GumbelSoftmax.call</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Apply Gumbel softmax to input tensor.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>inputs</code></b>
+            (<code><span title="tensorflow.Tensor">Tensor</span></code>)
+        –
+        <div class="doc-md-description">
+          <p>Tensor of arbitrary shape. The input is expected to be logits.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code><span title="tensorflow.Tensor">Tensor</span></code>
+        –
+        <div class="doc-md-description">
+          <p>Tensor of the same shape as input tensor.</p>
+      </div>
+      </li>
+  </ul>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">592</span>
+<span class="normal">593</span>
+<span class="normal">594</span>
+<span class="normal">595</span>
+<span class="normal">596</span>
+<span class="normal">597</span>
+<span class="normal">598</span>
+<span class="normal">599</span>
+<span class="normal">600</span>
+<span class="normal">601</span>
+<span class="normal">602</span>
+<span class="normal">603</span>
+<span class="normal">604</span>
+<span class="normal">605</span>
+<span class="normal">606</span>
+<span class="normal">607</span>
+<span class="normal">608</span>
+<span class="normal">609</span>
+<span class="normal">610</span>
+<span class="normal">611</span>
+<span class="normal">612</span>
+<span class="normal">613</span>
+<span class="normal">614</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Apply Gumbel softmax to input tensor.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        inputs:</span>
+<span class="sd">            Tensor of arbitrary shape. The input is expected to be logits.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor of the same shape as input tensor.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">inputs</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">complete_shape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_shape</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">minval</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="n">K</span><span class="o">.</span><span class="n">epsilon</span><span class="p">()</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="o">-</span><span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">u</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">g</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hard</span><span class="p">:</span>
+        <span class="n">y_hard</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">),</span> <span class="n">depth</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+        <span class="n">y_hard</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">y_hard</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stop_gradient</span><span class="p">(</span><span class="n">y_hard</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">+</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">y</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="VAE.layers.RandomSampling" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">VAE.layers.RandomSampling</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">RandomSampling</span><span class="p">(</span><span class="n">noise_shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="tensorflow.keras.layers.Layer">Layer</span></code></p>
+
+  
+      <p>Random sampling from normal distribution.</p>
+<p>This layer samples from an isotropic Gaussian with mean <code>z_mean</code> and log variance <code>z_log_var</code>.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>noise_shape</code></b>
+            (<code>list[int]</code>, default:
+                <code>None</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The shape of the random noise. Must be of the same length as the number of dimensions in the input and be
+broadcastable to the shape of the input. If <code>None</code>, the noise shape will be equal to the shape of the input.
+Default is <code>None</code>.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>**kwargs</code></b>
+        –
+        <div class="doc-md-description">
+          <p>Additional keyword arguments passed to the <code>Layer</code> superclass.</p>
+        </div>
+      </li>
+  </ul>
+
+                <details class="quote">
+                  <summary>Source code in <code>VAE/layers.py</code></summary>
+                  <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">664</span>
+<span class="normal">665</span>
+<span class="normal">666</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noise_shape</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">noise_shape</span> <span class="o">=</span> <span class="n">noise_shape</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+                </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="VAE.layers.RandomSampling.call" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.RandomSampling.call</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Sample from normal distribution.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>inputs</code></b>
+            (<code>tuple[<span title="tensorflow.Tensor">Tensor</span>, <span title="tensorflow.Tensor">Tensor</span>]</code>)
+        –
+        <div class="doc-md-description">
+          <p>Tuple of two or three tensors of the same shape. The first tensor is the mean of the normal
+distribution, the second tensor is the logarithm of the variance of the normal distribution. If a third
+tensor is given, it is used as the random sample. Otherwise, a random sample is generated.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code><span title="tensorflow.Tensor">Tensor</span></code>
+        –
+        <div class="doc-md-description">
+          <p>Tensor of the same shape as input tensors.</p>
+      </div>
+      </li>
+  </ul>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">668</span>
+<span class="normal">669</span>
+<span class="normal">670</span>
+<span class="normal">671</span>
+<span class="normal">672</span>
+<span class="normal">673</span>
+<span class="normal">674</span>
+<span class="normal">675</span>
+<span class="normal">676</span>
+<span class="normal">677</span>
+<span class="normal">678</span>
+<span class="normal">679</span>
+<span class="normal">680</span>
+<span class="normal">681</span>
+<span class="normal">682</span>
+<span class="normal">683</span>
+<span class="normal">684</span>
+<span class="normal">685</span>
+<span class="normal">686</span>
+<span class="normal">687</span>
+<span class="normal">688</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Sample from normal distribution.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        inputs:</span>
+<span class="sd">            Tuple of two or three tensors of the same shape. The first tensor is the mean of the normal</span>
+<span class="sd">            distribution, the second tensor is the logarithm of the variance of the normal distribution. If a third</span>
+<span class="sd">            tensor is given, it is used as the random sample. Otherwise, a random sample is generated.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tensor of the same shape as input tensors.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">z_mean</span><span class="p">,</span> <span class="n">z_log_var</span> <span class="o">=</span> <span class="n">inputs</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">complete_shape</span><span class="p">(</span><span class="n">z_mean</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_shape</span><span class="p">)</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">z_mean</span><span class="p">,</span> <span class="n">z_log_var</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">=</span> <span class="n">inputs</span>
+
+    <span class="k">return</span> <span class="n">z_mean</span> <span class="o">+</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">z_log_var</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h3 id="VAE.layers.Split" class="doc doc-heading">
+          <span class="doc doc-object-name doc-class-name">VAE.layers.Split</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">Split</span><span class="p">(</span><span class="n">size_splits</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="tensorflow.keras.layers.Layer">Layer</span></code></p>
+
+  
+      <p>Split input tensor into smaller chunks.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>size_splits</code></b>
+            (<code>list[int]</code>)
+        –
+        <div class="doc-md-description">
+          <p>Containing the sizes of each output tensor along <code>axis</code>.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>axis</code></b>
+            (<code>int</code>, default:
+                <code>0</code>
+)
+        –
+        <div class="doc-md-description">
+          <p>The dimension along which to split. Defaults to 0.</p>
+        </div>
+      </li>
+      <li class="doc-section-item field-body">
+        <b><code>**kwargs</code></b>
+        –
+        <div class="doc-md-description">
+          <p>Additional keyword arguments passed to the <code>Layer</code> superclass.</p>
+        </div>
+      </li>
+  </ul>
+
+                <details class="quote">
+                  <summary>Source code in <code>VAE/layers.py</code></summary>
+                  <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">719</span>
+<span class="normal">720</span>
+<span class="normal">721</span>
+<span class="normal">722</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_splits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">axis</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">size_splits</span> <span class="o">=</span> <span class="n">size_splits</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">axis</span> <span class="o">=</span> <span class="n">axis</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+                </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h4 id="VAE.layers.Split.call" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.Split.call</span>
+
+
+</h4>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">call</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Split input tensor into smaller chunks.</p>
+
+
+
+  <p><span class="doc-section-title">Parameters:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+        <b><code>inputs</code></b>
+            (<code><span title="tensorflow.Tensor">Tensor</span></code>)
+        –
+        <div class="doc-md-description">
+          <p>A tensor of arbitrary shape.</p>
+        </div>
+      </li>
+  </ul>
+
+
+
+  <p><span class="doc-section-title">Returns:</span></p>
+  <ul>
+      <li class="doc-section-item field-body">
+            <code>list[<span title="tensorflow.Tensor">Tensor</span>]</code>
+        –
+        <div class="doc-md-description">
+          <p>A list of tensors.</p>
+      </div>
+      </li>
+  </ul>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">731</span>
+<span class="normal">732</span>
+<span class="normal">733</span>
+<span class="normal">734</span>
+<span class="normal">735</span>
+<span class="normal">736</span>
+<span class="normal">737</span>
+<span class="normal">738</span>
+<span class="normal">739</span>
+<span class="normal">740</span>
+<span class="normal">741</span>
+<span class="normal">742</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inputs</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Split input tensor into smaller chunks.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        inputs:</span>
+<span class="sd">            A tensor of arbitrary shape.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list of tensors.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_splits</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">axis</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="VAE.layers.example_Film" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.example_Film</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">example_Film</span><span class="p">()</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Example of Film layer.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">758</span>
+<span class="normal">759</span>
+<span class="normal">760</span>
+<span class="normal">761</span>
+<span class="normal">762</span>
+<span class="normal">763</span>
+<span class="normal">764</span>
+<span class="normal">765</span>
+<span class="normal">766</span>
+<span class="normal">767</span>
+<span class="normal">768</span>
+<span class="normal">769</span>
+<span class="normal">770</span>
+<span class="normal">771</span>
+<span class="normal">772</span>
+<span class="normal">773</span>
+<span class="normal">774</span>
+<span class="normal">775</span>
+<span class="normal">776</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">example_Film</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Example of Film layer.&quot;&quot;&quot;</span>
+    <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">cond_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">)</span> <span class="o">+</span> <span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="p">)</span> <span class="o">+</span> <span class="n">cond_shape</span><span class="p">)</span>
+    <span class="n">x_in</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">cond_in</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">cond_shape</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">Film</span><span class="p">(</span>
+        <span class="n">use_scale</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">use_offset</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">use_bias</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+    <span class="p">)([</span><span class="n">x_in</span><span class="p">,</span> <span class="n">cond_in</span><span class="p">])</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">x_in</span><span class="p">,</span> <span class="n">cond_in</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+    <span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">weights</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">w</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="VAE.layers.example_GumbelSoftmax" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.example_GumbelSoftmax</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">example_GumbelSoftmax</span><span class="p">()</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Example of GumbelSoftmax layer.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">779</span>
+<span class="normal">780</span>
+<span class="normal">781</span>
+<span class="normal">782</span>
+<span class="normal">783</span>
+<span class="normal">784</span>
+<span class="normal">785</span>
+<span class="normal">786</span>
+<span class="normal">787</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">example_GumbelSoftmax</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Example of GumbelSoftmax layer.&quot;&quot;&quot;</span>
+    <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="p">)</span> <span class="o">+</span> <span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">x_in</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">GumbelSoftmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">noise_shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">))(</span><span class="n">x_in</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">x_in</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="VAE.layers.example_RandomSampling" class="doc doc-heading">
+          <span class="doc doc-object-name doc-function-name">VAE.layers.example_RandomSampling</span>
+
+
+</h3>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">example_RandomSampling</span><span class="p">()</span>
+</code></pre></div>
+
+  <div class="doc doc-contents ">
+  
+      <p>Example of RandomSampling layer.</p>
+
+          <details class="quote">
+            <summary>Source code in <code>VAE/layers.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">790</span>
+<span class="normal">791</span>
+<span class="normal">792</span>
+<span class="normal">793</span>
+<span class="normal">794</span>
+<span class="normal">795</span>
+<span class="normal">796</span>
+<span class="normal">797</span>
+<span class="normal">798</span>
+<span class="normal">799</span>
+<span class="normal">800</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">example_RandomSampling</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Example of RandomSampling layer.&quot;&quot;&quot;</span>
+    <span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">z_mean</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="p">)</span> <span class="o">+</span> <span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">z_log_var</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="p">)</span> <span class="o">+</span> <span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">z_mean_in</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">z_log_var_in</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="n">input_shape</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">RandomSampling</span><span class="p">(</span><span class="n">noise_shape</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">))([</span><span class="n">z_mean_in</span><span class="p">,</span> <span class="n">z_log_var_in</span><span class="p">])</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ks</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">z_mean_in</span><span class="p">,</span> <span class="n">z_log_var_in</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">out</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">([</span><span class="n">z_mean</span><span class="p">,</span> <span class="n">z_log_var</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 Andreas Groth
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/andr-groth" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.top", "navigation.sections", "navigation.expand", "content.code.copy", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a7c05c9e.min.js"></script>
+      
+    
+  </body>
+</html>
